@@ -1,5 +1,5 @@
 class PostAttachmentsController < ApplicationController
-  before_action :set_post_attachment, only: %i[ show edit update destroy ]
+  before_action :set_post_attachment, only: [ :show, :edit, :update, :destroy ]
 
   # GET /post_attachments or /post_attachments.json
   def index
@@ -8,6 +8,7 @@ class PostAttachmentsController < ApplicationController
 
   # GET /post_attachments/1 or /post_attachments/1.json
   def show
+    @post = Post.find(params[:id])
   end
 
   # GET /post_attachments/new
@@ -25,7 +26,7 @@ class PostAttachmentsController < ApplicationController
 
     respond_to do |format|
       if @post_attachment.save
-        format.html { redirect_to post_attachment_url(@post_attachment), notice: "Post attachment was successfully created." }
+        format.html { redirect_to @post_attachment, notice: "Post attachment was successfully created." }
         format.json { render :show, status: :created, location: @post_attachment }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -40,6 +41,9 @@ class PostAttachmentsController < ApplicationController
       if @post_attachment.update(post_attachment_params)
         format.html { redirect_to @post_attachment.post, notice: "Post attachment was successfully updated." }
         format.json { render :show, status: :ok, location: @post_attachment }
+      else
+        format.html { render :edit }
+        format.json { render json: @post_attachment.errors, status: :unprocessable_entity }
       end
     end
   end

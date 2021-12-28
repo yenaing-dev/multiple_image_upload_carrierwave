@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[ show edit update destroy ]
+  before_action :set_post, only: [ :show, :edit, :update, :destroy ]
 
   # GET /posts or /posts.json
   def index
@@ -8,8 +8,7 @@ class PostsController < ApplicationController
 
   # GET /posts/1 or /posts/1.json
   def show
-    @post_attachments = @posts.post_attachments.all
-    @post = Post.find(params[:id])
+    @post_attachments = @post.post_attachments.all
   end
 
   # GET /posts/new
@@ -29,9 +28,9 @@ class PostsController < ApplicationController
     respond_to do |format|
       if @post.save
         params[:post_attachments]['avatar'].each do |a|
-          @post_attachment = @post.post_attachments.create!(:avatar => a)
+          @post_attachment = @post.post_attachments.create!(:avatar => a, :post_id => @post.id)
         end
-        format.html { redirect_to post_url(@post), notice: "Post was successfully created." }
+        format.html { redirect_to @post, notice: "Post was successfully created." }
         format.json { render :show, status: :created, location: @post }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -44,7 +43,7 @@ class PostsController < ApplicationController
   def update
     respond_to do |format|
       if @post.update(post_params)
-        format.html { redirect_to post_url(@post), notice: "Post was successfully updated." }
+        format.html { redirect_to @post, notice: "Post was successfully updated." }
         format.json { render :show, status: :ok, location: @post }
       else
         format.html { render :edit, status: :unprocessable_entity }

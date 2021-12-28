@@ -6,8 +6,8 @@
 </p>
 
 <% @post_attachments.each do |p| %>
-  <%= image_tag p.avatar_url %>
-  <%= link_to 'Edit Attachment', edit_post_path(p) %>
+  <%= image_tag p.avatar_url, :style => "width: 300px; height: 250px;" %>
+  <%= link_to 'Edit Attachment', edit_post_attachment_path(p) %>
 <% end %>
 
 <%= link_to 'Edit', edit_post_path(@post) %> |
