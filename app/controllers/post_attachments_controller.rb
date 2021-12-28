@@ -8,7 +8,6 @@ class PostAttachmentsController < ApplicationController
 
   # GET /post_attachments/1 or /post_attachments/1.json
   def show
-    @post = Post.find(params[:id])
   end
 
   # GET /post_attachments/new
