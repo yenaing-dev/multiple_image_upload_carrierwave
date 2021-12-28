@@ -38,11 +38,8 @@ class PostAttachmentsController < ApplicationController
   def update
     respond_to do |format|
       if @post_attachment.update(post_attachment_params)
-        format.html { redirect_to post_attachment_url(@post_attachment), notice: "Post attachment was successfully updated." }
+        format.html { redirect_to @post_attachment.post, notice: "Post attachment was successfully updated." }
         format.json { render :show, status: :ok, location: @post_attachment }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @post_attachment.errors, status: :unprocessable_entity }
       end
     end
   end
