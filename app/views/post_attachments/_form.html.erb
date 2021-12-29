@@ -1,5 +1,5 @@
 <%= form_for(@post_attachment) do |f| %>
-<%= image_tag(@post_attachment.avatar.url) if @post_attachment.avatar.url %>
+<%= image_tag @post_attachment.avatar.url if @post_attachment.avatar.url %>
   <div class="field">
     <%= f.label :avatar %><br>
     <%= f.file_field :avatar %>
